@@ -6,6 +6,10 @@ var Pointer = require('../Pointer/pointer');
 var DotsContainer = require('../DotsContainer/dotsContainer');
 
 var Frequencymeter = React.createClass({
+    
+    setFrequency: function(frequency){
+      console.log('Frequency: '+frequency);
+    },
 
     render: function() {
       return (

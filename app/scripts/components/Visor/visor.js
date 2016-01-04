@@ -4,7 +4,10 @@ var ReactDOM = require('react-dom');
 var TweenMax = require('gsap');
 
 var Visor = React.createClass({
-
+    setNote: function(note){
+      console.log('NOTE: '+note);
+    },
+    
     render: function() {
         
         return (

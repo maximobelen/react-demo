@@ -20,7 +20,6 @@ var DotsContainer = React.createClass({
     for (var dot in this.refs) {
       var x = this.centerX +(this.radius * Math.cos(this.radians(this.position)));
       var y = this.centerY +(this.radius * Math.sin(this.radians(this.position)));
-      console.log(dot+'    x:'+x +' y:'+y);
       this.refs[dot].position(x, y);
       this.position += 20;
     }
