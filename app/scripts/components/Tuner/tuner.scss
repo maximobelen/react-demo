@@ -1,0 +1,16 @@
+#tuner {
+  position: fixed;
+  background-color: black;
+  height: 500px;
+  width: 800px;
+  top: 50%;
+  left: 50%; 
+  transform: translate(-50%, -50%);
+
+  .main-title{
+    color: white;
+    float: right;
+    margin-right: 50px;
+    font-size: 30px;
+  }
+}
