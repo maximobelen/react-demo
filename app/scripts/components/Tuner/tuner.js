@@ -142,8 +142,8 @@ var Tuner = React.createClass({
       var note_frequency = C2 * Math.pow(2, i / 12);
       var note_name = model.notes[i % 12];
       var note = { "frequency": note_frequency, "name": note_name };
-      var just_above = { "frequency": note_frequency * Math.pow(2, 1 / 48), "name": note_name + " (a bit sharp)" };
-      var just_below = { "frequency": note_frequency * Math.pow(2, -1 / 48), "name": note_name + " (a bit flat)" };
+      var just_above = { "frequency": note_frequency * Math.pow(2, 1 / 48), "name": note_name + "." };
+      var just_below = { "frequency": note_frequency * Math.pow(2, -1 / 48), "name": '.' + note_name };
       this.test_frequencies = this.test_frequencies.concat([ just_below, note, just_above ]);
     }
 

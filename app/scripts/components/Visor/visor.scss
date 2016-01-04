@@ -3,5 +3,13 @@
   height: 80px;
   background-color: grey;
   margin-left: 50px;
-  float: left
+  float: left;
+  font-size: 40px;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+  .note-container{
+    display: inline-block;
+    margin-top: 15px;
+  }
 }

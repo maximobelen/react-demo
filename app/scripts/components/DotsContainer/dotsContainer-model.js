@@ -6,31 +6,31 @@ module.exports = {
 
   'dots': [
     {
-      'value': -40
+      'value': -48
     },
     {
-      'value': -30
+      'value': -36
     },
     {
-      'value': -20
+      'value': -24
     },
     {
-      'value': -10
+      'value': -12
     },
     {
       'value': 0
     },
     {
-      'value': 10
+      'value': 12
     },
     {
-      'value': 20
+      'value': 24
     },
     {
-      'value': 30
+      'value': 36
     },
     {
-      'value': 40
+      'value': 48
     }
   ]
 };
