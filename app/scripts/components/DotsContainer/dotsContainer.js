@@ -29,6 +29,10 @@ var DotsContainer = React.createClass({
     return angle * (Math.PI / 180);
   },
 
+  setActiveDot: function(index) {
+    console.log('current dot is:'+ index);
+  },
+
   countDots: function() {
     var counter = 0;
     for (var dot in this.refs) {

@@ -17,9 +17,7 @@ var Tuner = React.createClass({
         // onSampleFinished will be called once an average volume 
         // for the room has been determined 
         onSampleFinished: function() {
-     
-          console.log( 'sampling finished' );
-     
+          
           // telling the mic to listen will start checking 
           // if the volume level goes above a certain level 
           // if so recording will start and the onRecordStart 
@@ -31,20 +29,15 @@ var Tuner = React.createClass({
         // this happens when the volume of the mic is above the average  
         // volume level 
         onRecordStart: function() {
-     
-          console.log( 'started recording' );
+
         },
      
         // onRecordStop will be called when recording has stopped due 
         // to the rooms volume getting below the average volume 
         onRecordStop: function() {
-     
-          console.log( 'stopped recording' );
-     
+          
           // get the recorded data 
           var data = mic.getStereoData();
-          
-
           this.analizeAudio(
             {
               "timeseries": data,
@@ -60,12 +53,8 @@ var Tuner = React.createClass({
         }.bind(this)
       }, function( err ) {
      
-        if( !err ) {
-     
-          console.log( 'good to go' );
-        } else {
-     
-          console.log( 'oopsy error' );
+        if( err ) {
+          console.log( 'Tuner Error:'+ err );
         }
       });
     }
