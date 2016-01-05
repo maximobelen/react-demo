@@ -5,6 +5,7 @@ var TweenMax = require('gsap');
 var Frequencymeter = require('../Frequencymeter/frequencymeter');
 var Visor = require('../Visor/visor');
 var autorecordmic = require('autorecordmic');
+var work = require('webworkify');
 
 var Tuner = React.createClass({
 
@@ -23,13 +24,17 @@ var Tuner = React.createClass({
      
         onRecordStop: function() {
           var data = mic.getStereoData();
-          this.analizeAudio(
+
+
+          this.worker.postMessage
+          (
             {
               "timeseries": data,
               "test_frequencies": this.test_frequencies,
               "sample_rate": mic.context.sampleRate
             }
           );
+
           mic.listen();
         }.bind(this)
       }, function( err ) {
@@ -41,43 +46,9 @@ var Tuner = React.createClass({
     }
   },
 
-  analizeAudio: function(data){
-    var timeseries = data.timeseries;
-    var test_frequencies = data.test_frequencies;
-    var sample_rate = data.sample_rate;
-    var amplitudes = this.compute_correlations(timeseries, test_frequencies, sample_rate);
-
-    this.interpret_correlation_result({ "timeseries": timeseries, "frequency_amplitudes": amplitudes });
-  },
-
-  compute_correlations: function(timeseries, test_frequencies, sample_rate){
-    // 2pi * frequency gives the appropriate period to sine.
-    // timeseries index / sample_rate gives the appropriate time coordinate.
-    var scale_factor = 2 * Math.PI / sample_rate;
-    var amplitudes = test_frequencies.map
-    (
-      function(f)
-      {
-        var frequency = f.frequency;
-
-        // Represent a complex number as a length-2 array [ real, imaginary ].
-        var accumulator = [ 0, 0 ];
-        for (var t = 0; t < timeseries.length; t++)
-        {
-          accumulator[0] += timeseries[t] * Math.cos(scale_factor * frequency * t);
-          accumulator[1] += timeseries[t] * Math.sin(scale_factor * frequency * t);
-        }
-
-        return accumulator;
-      }
-    );
-
-    return amplitudes;
-  },
-
-  interpret_correlation_result: function(data){
-    var timeseries = data.timeseries;
-    var frequency_amplitudes = data.frequency_amplitudes;
+  interpret_correlation_result: function(event){
+    var timeseries = event.data.timeseries;
+    var frequency_amplitudes = event.data.frequency_amplitudes;
     // Compute the (squared) magnitudes of the complex amplitudes for each
     // test frequency.
     var magnitudes = frequency_amplitudes.map(function(z) { return z[0] * z[0] + z[1] * z[1]; });
@@ -106,6 +77,10 @@ var Tuner = React.createClass({
   },
 
   componentDidMount: function() {
+
+    this.worker = work(require('./worker.js'));
+    this.worker.addEventListener('message', this.interpret_correlation_result.bind(this));
+
     var C2 = 65.41;
     this.test_frequencies = [];
 
@@ -117,6 +92,7 @@ var Tuner = React.createClass({
       var just_below = { "frequency": note_frequency * Math.pow(2, -1 / 48), "name": '.' + note_name };
       this.test_frequencies = this.test_frequencies.concat([ just_below, note, just_above ]);
     }
+
     this.startRecording();
   },
 
