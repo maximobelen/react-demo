@@ -2,8 +2,7 @@ var React = require('react');
 var model = require('./frequencymeter-model');
 var ReactDOM = require('react-dom');
 var TweenMax = require('gsap');
-var Pointer = require('../Pointer/pointer');
-var DotsContainer = require('../DotsContainer/dotsContainer');
+var SpotContainer = require('../SpotContainer/SpotContainer');
 
 var Frequencymeter = React.createClass({
   
@@ -12,17 +11,28 @@ var Frequencymeter = React.createClass({
   },
 
   setFrequency: function(frequency){
-    console.log('Frequency: '+frequency);
     this.frequency = frequency.toFixed(2);
-    this.setState({frequency: !this.state.frequency});
+    this.setState({frequency: true});
+  },
+
+  setSpot: function(index){
+
+    if(index % 3 === 0){
+      this.refs.spotContainer.setActiveSpot(0);
+    }
+    if(index % 3 === 1){
+      this.refs.spotContainer.setActiveSpot(1);
+    }
+    if(index % 3 === 2){
+      this.refs.spotContainer.setActiveSpot(2);
+    }
   },
 
   render: function() {
     var frequency = this.state.frequency ? this.frequency + 'Hz' :'0Hz';
     return (
       <div id="frequencymeter">
-        <DotsContainer></DotsContainer>
-        <Pointer></Pointer>
+        <SpotContainer  ref={'spotContainer'}></SpotContainer>
         <div className="frequency-number">{frequency}</div>
       </div>
     );

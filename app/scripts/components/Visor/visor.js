@@ -10,9 +10,8 @@ var Visor = React.createClass({
   },
 
   setNote: function(note){
-    console.log('NOTE: ' + note);
     this.note = note;
-    this.setState({note: !this.state.note});
+    this.setState({note: true});
   },
 
   render: function() {

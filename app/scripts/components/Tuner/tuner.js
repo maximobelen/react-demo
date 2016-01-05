@@ -9,34 +9,19 @@ var autorecordmic = require('autorecordmic');
 var Tuner = React.createClass({
 
   startRecording: function(){
-    // check if this browser can support recording from the mic 
     if( autorecordmic.isAvailable ) {
      
       var mic = autorecordmic( {
      
-        // onSampleFinished will be called once an average volume 
-        // for the room has been determined 
         onSampleFinished: function() {
-          
-          // telling the mic to listen will start checking 
-          // if the volume level goes above a certain level 
-          // if so recording will start and the onRecordStart 
-          // will be called 
           mic.listen();
         },
      
-        // onRecordStart will be called once audio date is being recorded 
-        // this happens when the volume of the mic is above the average  
-        // volume level 
         onRecordStart: function() {
 
         },
      
-        // onRecordStop will be called when recording has stopped due 
-        // to the rooms volume getting below the average volume 
         onRecordStop: function() {
-          
-          // get the recorded data 
           var data = mic.getStereoData();
           this.analizeAudio(
             {
@@ -45,10 +30,6 @@ var Tuner = React.createClass({
               "sample_rate": mic.context.sampleRate
             }
           );
-
-          // do something with the recorded data 
-     
-          // tell the mic to listen again 
           mic.listen();
         }.bind(this)
       }, function( err ) {
@@ -120,6 +101,7 @@ var Tuner = React.createClass({
       var dominant_frequency = this.test_frequencies[maximum_index];
       this.refs.visor.setNote(dominant_frequency.name);
       this.refs.frequencymeter.setFrequency(dominant_frequency.frequency);
+      this.refs.frequencymeter.setSpot(maximum_index);
     }
   },
 
@@ -135,7 +117,6 @@ var Tuner = React.createClass({
       var just_below = { "frequency": note_frequency * Math.pow(2, -1 / 48), "name": '.' + note_name };
       this.test_frequencies = this.test_frequencies.concat([ just_below, note, just_above ]);
     }
-
     this.startRecording();
   },
 
