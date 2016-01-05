@@ -13,7 +13,8 @@ var Tuner = React.createClass({
     if( autorecordmic.isAvailable ) {
      
       var mic = autorecordmic( {
-     
+        maxDuration: 500,
+        recordStartLevel: 10,
         onSampleFinished: function() {
           mic.listen();
         },
@@ -79,7 +80,7 @@ var Tuner = React.createClass({
   componentDidMount: function() {
 
     this.worker = work(require('./worker.js'));
-    this.worker.addEventListener('message', this.interpret_correlation_result.bind(this));
+    this.worker.addEventListener('message', this.interpret_correlation_result);
 
     var C2 = 65.41;
     this.test_frequencies = [];
