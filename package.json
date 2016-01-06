@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "https://github.com/maximobelen",
   "dependencies": {
+    "autorecordmic": "^0.3.4",
     "domready": "^1.0.8",
     "gsap": "^1.18.2",
     "gulp-open": "^1.0.0",
